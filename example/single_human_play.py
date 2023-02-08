@@ -3,7 +3,8 @@
 from time import perf_counter
 import pygame
 from eve_bench.aorticarch.arch_vmr94 import ArchVMR94, ObservationType
-import matplotlib.pyplot as plt
+
+# import matplotlib.pyplot as plt
 
 env = ArchVMR94(init_visual=True, normalize_obs=False, obs_type=ObservationType.IMAGE)
 

@@ -70,11 +70,11 @@ class Imaging:
     ):
 
         draw = ImageDraw.Draw(image)
-        point_cloud_image = self._coord_transform_maze_to_image(point_cloud)
+        point_cloud_image = self._coord_transform_tracking_to_image(point_cloud)
         draw.line(point_cloud_image, fill=colour, width=width, joint="curve")
         return image
 
-    def _coord_transform_maze_to_image(
+    def _coord_transform_tracking_to_image(
         self, coords: np.ndarray
     ) -> List[Tuple[float, float]]:
 
@@ -84,17 +84,3 @@ class Imaging:
         coords_image[:, 1] = -coords_image[:, 1] + self.image_size[1]
         coords_image = [(coord[0], coord[1]) for coord in coords_image]
         return coords_image
-
-    def _vector_transform_maze_to_image(
-        self, vector: Tuple[float, float]
-    ) -> Tuple[float, float]:
-        x = vector[0] * self.maze_to_image_factor
-
-        y = -vector[1] * self.maze_to_image_factor
-
-        return (x, y)
-
-    def _get_unit_vector(self, vector: Tuple[float, float]) -> Tuple[float, float]:
-        length = (vector[0] ** 2 + vector[1] ** 2) ** (1 / 2)
-        unit_vector = [vector[0] / length, vector[1] / length]
-        return tuple(unit_vector)

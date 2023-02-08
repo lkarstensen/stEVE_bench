@@ -2,7 +2,6 @@ from typing import Dict, Generator, List, Tuple, NamedTuple
 from copy import deepcopy
 from math import inf
 import numpy as np
-import gymnasium as gym
 
 from .aorticarch import AorticArch
 from .branch import Branch, BranchingPoint
@@ -28,24 +27,6 @@ class Pathfinder:
         self._path_points = np.empty((0, 3))
         self._path_branching_points = np.empty((0, 3))
         self.target = None
-
-    @property
-    def path_length(self) -> float:
-        return self._path_length
-
-    @property
-    def path_points(self) -> np.ndarray:
-        return self._path_points
-
-    @property
-    def path_branching_points(self):  # -> List[BranchingPoint]:
-        return self._path_branching_points
-
-    @property
-    def coordinate_space(self) -> gym.spaces.Box:
-        low = self.vessel_tree.coordinate_space.low
-        high = self.vessel_tree.coordinate_space.high
-        return gym.spaces.Box(low=low, high=high, dtype=np.float32)
 
     def get_path_length(self, position: np.ndarray, target: np.ndarray):
         position_branch = self.vessel_tree.find_nearest_branch_to_point(position)
@@ -88,8 +69,8 @@ class Pathfinder:
         self,
     ) -> Dict[BranchingPoint, List[BranchingPoint]]:
         _search_graph_base = {}
-        for node in self._node_connections:
-            _search_graph_base[node] = list(self._node_connections[node].keys())
+        for node, value in self._node_connections.items():
+            _search_graph_base[node] = list(value.keys())
         return _search_graph_base
 
     def _get_shortest_path(
@@ -98,7 +79,7 @@ class Pathfinder:
         target_branch: Branch,
         start: np.ndarray,
         target: np.ndarray,
-    ):  # -> Tuple[List[BranchingPoint], float, List[CenterlinePoint]]:
+    ) -> float:
 
         search_graph = self._create_search_graph(start_branch, target_branch)
         bfs_paths = self._get_bfs_paths_generator(search_graph)
