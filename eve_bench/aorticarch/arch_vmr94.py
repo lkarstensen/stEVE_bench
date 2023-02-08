@@ -115,7 +115,7 @@ class ArchVMR94(gym.Env):
         for branch in ["btrunk", "carotid", "rt_carotid", "subclavian"]:
             points = self.vesseltree[branch].coordinates
             dist_to_aorta = self.vesseltree["aorta"].dist_to_branch(points)
-            to_omit = np.argwhere(dist_to_aorta < 12.5)
+            to_omit = np.argwhere(dist_to_aorta < 17)
             points = np.delete(points, to_omit, axis=0)
             self.potential_targets = np.vstack((self.potential_targets, points))
 
