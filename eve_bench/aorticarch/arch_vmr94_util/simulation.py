@@ -1,4 +1,5 @@
 import logging
+import os
 import Sofa
 import SofaRuntime  # pylint: disable=unused-import
 import numpy as np
@@ -461,12 +462,14 @@ class Simulation:
         )
 
         # Target
+        file_dir = os.path.dirname(os.path.realpath(__file__))
+        mesh_path = os.path.join(file_dir, "unit_sphere.stl")
         target_node = self.root.addChild("main_target")
         target_node.addObject(
             "MeshSTLLoader",
             name="loader",
             triangulate=True,
-            filename="/Users/lennartkarstensen/stacie/eve/eve/visualisation/meshes/unit_sphere.stl",
+            filename=mesh_path,
             scale=self.target_size,
             translation=[0, 0, 0],
         )

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 from glob import glob
 
-visu_mesh_data = glob("eve/visualisation/meshes/*")
+visu_mesh_data = glob("eve_bench/aorticarch/arch_vmr94_util/*.stl")
 setup(
     name="eve_bench",
     version="0.0",
