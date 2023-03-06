@@ -51,6 +51,13 @@ def _load_points_from_pth(pth_file_path: str, vtu_mesh: pv.UnstructuredGrid) -> 
     to_keep = np.argwhere(to_keep)
     points = points[to_keep.reshape(-1)]
     radii = radii[to_keep.reshape(-1)]
+    if name.lower() != "aorta":
+        points = points[:-15]
+        radii = radii[:-15]
+    else:
+        points = points[7:]
+        radii = radii[7:]
+
     return Branch(
         name=name.lower(),
         coordinates=np.array(points, dtype=np.float32),
@@ -175,11 +182,12 @@ class AorticArch:
         branch_np = branch.coordinates
         distances = np.linalg.norm(branch_np - point, axis=1)
         min_idx = np.argmin(distances)
-        min_dist = distances[min_idx]
-        min_radius = branch.radii[min_idx]
-        if (
-            min_idx == 0 or min_idx == branch_np.shape[0] - 1
-        ) and min_dist > min_radius / 2:
+        sec_min_idx = np.argpartition(distances, 1)[1]
+        min_to_sec_min = branch_np[sec_min_idx] - branch_np[min_idx]
+        min_to_point = point - branch_np[min_idx]
+        dot_prod = np.dot(min_to_sec_min, min_to_point)
+
+        if (min_idx == 0 or min_idx == branch_np.shape[0] - 1) and dot_prod <= 0:
             branch_point = branch.coordinates[min_idx]
             end_is_open = True
             for branching_point in self.branching_points:
