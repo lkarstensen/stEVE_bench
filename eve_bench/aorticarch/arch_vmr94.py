@@ -21,7 +21,7 @@ class ObservationType(Enum):
 class ArchVMR94(gym.Env):
     def __init__(
         self,
-        normalize_obs: bool = False,
+        normalize_obs: bool = True,
         init_visual: bool = False,
         target_reached_threshold: float = 5,
         step_limit=150,
@@ -152,10 +152,14 @@ class ArchVMR94(gym.Env):
                 self._tracking_obs_low,
                 self._tracking_obs_high,
             )
+            target_min = np.min(self.potential_targets, axis=0)
+            target_max = np.max(self.potential_targets, axis=0)
+            target_min = np.delete(target_min, 1, axis=-1)
+            target_max = np.delete(target_max, 1, axis=-1)
             target = self._normalize(
                 target,
-                np.min(self.potential_targets, axis=0),
-                np.max(self.potential_targets, axis=0),
+                target_min,
+                target_max,
             )
             last_action = self._normalize(
                 last_action,
@@ -232,9 +236,12 @@ class ArchVMR94(gym.Env):
         )
         target_low = np.min(self.potential_targets, axis=0)
         target_high = np.max(self.potential_targets, axis=0)
+        target_low = np.delete(target_low, 1, axis=-1)
+        target_high = np.delete(target_high, 1, axis=-1)
         if normalize_obs:
             target_low = self._normalize(target_low, target_low, target_high)
             target_high = self._normalize(target_high, target_low, target_high)
+
         target_obs_space = gym.spaces.Box(
             low=target_low.astype(np.float32), high=target_high.astype(np.float32)
         )
