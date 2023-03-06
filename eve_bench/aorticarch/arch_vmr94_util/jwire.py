@@ -66,8 +66,8 @@ class JWire:  # pylint: disable=too-many-instance-attributes
         beams_tip = math.ceil(self.tip_length * self.beams_per_mm_tip)
         beams_straight = math.ceil(straight_length * self.beams_per_mm_straight)
 
-        self.is_a_procedural_shape: bool = field(init=False, repr=False, default=True)
-        self.mesh_path: str = field(init=False, repr=False, default="")
+        self.is_a_procedural_shape: bool = True
+        self.mesh_path: str = ""
 
         self.straight_length = straight_length
         self.spire_diameter = spire_diameter
