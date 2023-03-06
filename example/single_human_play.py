@@ -2,11 +2,17 @@
 
 from time import perf_counter
 import pygame
+import gymnasium as gym
+
 from eve_bench.aorticarch.arch_vmr94 import ArchVMR94, ObservationType
 
 # import matplotlib.pyplot as plt
 
-env = ArchVMR94(init_visual=True, normalize_obs=False, obs_type=ObservationType.IMAGE)
+# env = ArchVMR94(init_visual=True, normalize_obs=False, obs_type=ObservationType.IMAGE)
+
+env = gym.make("eve_bench/arch_vmr94", init_visual=True)
+
+obs = env.observation_space.sample()
 
 n_steps = 0
 r_cum = 0.0
