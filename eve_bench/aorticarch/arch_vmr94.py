@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, Dict
+from typing import Any, Dict, Optional, Tuple
 import logging
 import random
 import numpy as np
@@ -62,7 +62,7 @@ class ArchVMR94(gym.Env):
 
     def step(
         self, action: np.ndarray
-    ) -> tuple[Dict[str, np.ndarray], float, bool, bool, dict[str, Any]]:
+    ) -> Tuple[Dict[str, np.ndarray], float, bool, bool, Dict[str, Any]]:
         action = np.array(action)
         self.intervention.step(action)
         target = self.target
@@ -82,7 +82,7 @@ class ArchVMR94(gym.Env):
         return obs, reward, terminal, truncation, {"success": self._target_reached}
 
     def reset(
-        self, *, seed: int | None = None, options: dict[str, Any] | None = None
+        self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, np.ndarray]:
         super().reset(seed=seed)
         self.target = self._np_random.choice(self.potential_targets)
