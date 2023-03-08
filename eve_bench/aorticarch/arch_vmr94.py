@@ -234,8 +234,8 @@ class ArchVMR94(gym.Env):
             low=tracking_obs_low.astype(np.float32),
             high=tracking_obs_high.astype(np.float32),
         )
-        target_low = np.min(self.potential_targets, axis=0)
-        target_high = np.max(self.potential_targets, axis=0)
+        target_low = np.min(self.potential_targets, axis=0) - insertion_point
+        target_high = np.max(self.potential_targets, axis=0) - insertion_point
         target_low = np.delete(target_low, 1, axis=-1)
         target_high = np.delete(target_high, 1, axis=-1)
         if normalize_obs:
