@@ -27,6 +27,7 @@ class ArchVMR94(gym.Env):
         step_limit=150,
         normalize_action: bool = False,
         obs_type: ObservationType = ObservationType.TRACKING,
+        farama_gym_interface: bool = False,
     ) -> None:
         self.logger = logging.getLogger(self.__module__)
 
@@ -34,6 +35,7 @@ class ArchVMR94(gym.Env):
         self.target_reached_threshold = target_reached_threshold
         self.step_limit = step_limit
         self.obs_type = obs_type
+        self.farama_gym_interface = farama_gym_interface
 
         self.vesseltree = AorticArch()
         self.intervention = Simulation(
@@ -79,7 +81,21 @@ class ArchVMR94(gym.Env):
         terminal = self._get_terminal()
         truncation = self._get_truncation()
         self._step_counter += 1
-        return obs, reward, terminal, truncation, {"success": self._target_reached}
+        if self.farama_gym_interface:
+            return (
+                obs,
+                reward,
+                terminal,
+                truncation,
+                {"success": self._target_reached},
+            )
+        else:
+            return (
+                obs,
+                reward,
+                terminal or truncation,
+                {"success": self._target_reached},
+            )
 
     def reset(
         self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
