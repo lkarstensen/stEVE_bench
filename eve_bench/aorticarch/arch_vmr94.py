@@ -154,8 +154,8 @@ class ArchVMR94(gym.Env):
             )
             target_min = np.min(self.potential_targets, axis=0)
             target_max = np.max(self.potential_targets, axis=0)
-            target_min = np.delete(target_min, 1, axis=-1)
-            target_max = np.delete(target_max, 1, axis=-1)
+            target_min = np.delete(target_min, 1, axis=-1) - insertion_point
+            target_max = np.delete(target_max, 1, axis=-1) - insertion_point
             target = self._normalize(
                 target,
                 target_min,
