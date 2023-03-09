@@ -117,8 +117,10 @@ class ArchVMR94(gym.Env):
         )
         self._step_counter = 0
         self._target_reached = False
-
-        return obs
+        if self.farama_gym_interface:
+            return obs, {}
+        else:
+            return obs
 
     def close(self):
         self.intervention.close()
