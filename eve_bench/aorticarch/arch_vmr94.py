@@ -233,8 +233,8 @@ class ArchVMR94(gym.Env):
         insertion_point = self.vesseltree.insertion.position
         tracking_low = self.vesseltree.coordinate_space.low - insertion_point
         tracking_high = self.vesseltree.coordinate_space.high - insertion_point
-        tracking_low -= 0.1 * np.abs(tracking_low)
-        tracking_high += 0.1 * np.abs(tracking_high)
+        tracking_low -= 0.1 * np.abs(tracking_high - tracking_low)
+        tracking_high += 0.1 * np.abs(tracking_high - tracking_low)
         tracking_obs_low = np.zeros((2, 2, 2))
         tracking_obs_high = np.zeros((2, 2, 2))
         tracking_obs_low[:, 0] = np.delete(tracking_low, 1, axis=-1)
@@ -256,6 +256,8 @@ class ArchVMR94(gym.Env):
         )
         target_low = np.min(self.potential_targets, axis=0) - insertion_point
         target_high = np.max(self.potential_targets, axis=0) - insertion_point
+        target_low -= 0.1 * np.abs(target_high - target_low)
+        target_high += 0.1 * np.abs(target_high - target_low)
         target_low = np.delete(target_low, 1, axis=-1)
         target_high = np.delete(target_high, 1, axis=-1)
         if normalize_obs:
