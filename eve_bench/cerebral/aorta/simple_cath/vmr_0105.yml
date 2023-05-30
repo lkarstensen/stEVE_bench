@@ -1,0 +1,108 @@
+_class: eve.intervention.monoplanestatic.MonoPlaneStatic
+_id: 6075779392
+vessel_tree:
+    _class: eve.intervention.vesseltree.vmr.VMR
+    _id: 4373446608
+    model: '0105_0001'
+    insertion_vessel_name: aorta
+    insertion_point_idx: -1
+    insertion_direction_idx_diff: -2
+    approx_branch_radii: 10
+    rotate_yzx_deg:
+    - 0
+    - 180
+    - 0
+devices:
+-   _class: eve.intervention.device.jshaped.JShaped
+    _id: 4373445840
+    name: guidewire
+    velocity_limit: !!python/tuple
+    - 25
+    - 3.14
+    length: 450
+    tip_radius: 12.1
+    tip_angle: 1.2566370614359172
+    tip_outer_diameter: 0.7
+    tip_inner_diameter: 0.0
+    straight_outer_diameter: 0.89
+    straight_inner_diameter: 0.0
+    poisson_ratio: 0.49
+    young_modulus_tip: 17000.0
+    young_modulus_straight: 80000.0
+    mass_density_tip: 2.1e-05
+    mass_density_straight: 2.1e-05
+    visu_edges_per_mm: 0.5
+    collis_edges_per_mm_tip: 2
+    collis_edges_per_mm_straight: 0.1
+    beams_per_mm_tip: 1.4
+    beams_per_mm_straight: 0.5
+    color: !!python/tuple
+    - 0.0
+    - 0.0
+    - 0.0
+-   _class: eve.intervention.device.jshaped.JShaped
+    _id: 4373445456
+    name: cath
+    velocity_limit: !!python/tuple
+    - 25
+    - 3.14
+    length: 450
+    tip_radius: 10.0
+    tip_angle: 1.5707963267948966
+    tip_outer_diameter: 1.2
+    tip_inner_diameter: 1.0
+    straight_outer_diameter: 1.2
+    straight_inner_diameter: 1.0
+    poisson_ratio: 0.49
+    young_modulus_tip: 17000.0
+    young_modulus_straight: 80000.0
+    mass_density_tip: 2.1e-05
+    mass_density_straight: 2.1e-05
+    visu_edges_per_mm: 0.5
+    collis_edges_per_mm_tip: 2
+    collis_edges_per_mm_straight: 0.1
+    beams_per_mm_tip: 1.4
+    beams_per_mm_straight: 0.09
+    color: !!python/tuple
+    - 1.0
+    - 0.0
+    - 0.0
+simulation:
+    _class: eve.intervention.simulation.simulation.Simulation
+    _id: 4373445360
+    friction: 0.3
+    dt_simulation: 0.006
+fluoroscopy:
+    _class: eve.intervention.fluoroscopy.fluoroscopy.Fluoroscopy
+    _id: 6075779440
+    simulation:
+        _class: eve.intervention.simulation.simulation.Simulation
+        _id: 4373445360
+    vessel_tree:
+        _class: eve.intervention.vesseltree.vmr.VMR
+        _id: 4373446608
+    image_frequency: 7.5
+    image_rot_zx:
+    - 45
+    - 0
+    image_center:
+    - -17.431358337402344
+    - -11.928695678710938
+    - -5.9879913330078125
+    field_of_view: null
+target:
+    _class: eve.intervention.target.centerlinerandom.CenterlineRandom
+    _id: 6075779968
+    vessel_tree:
+        _class: eve.intervention.vesseltree.vmr.VMR
+        _id: 4373446608
+    fluoroscopy:
+        _class: eve.intervention.fluoroscopy.fluoroscopy.Fluoroscopy
+        _id: 6075779440
+    threshold: 5
+    branches:
+    - carotid
+    - rt_carotid
+    - subclavian
+    min_distance_between_possible_targets: null
+stop_device_at_tree_end: true

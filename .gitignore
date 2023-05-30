@@ -2,7 +2,12 @@
 
 test*.py
 
+.vscode/
+
 *vmr/
+
+
+
 
 ## Github Python .gitignore template
 
