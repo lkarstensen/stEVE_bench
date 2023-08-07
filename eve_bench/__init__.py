@@ -1,6 +1,6 @@
 from . import aorticarch
 
-from . import cerebral
+from . import neurovascular
 
 # import gymnasium as gym
 

@@ -1,4 +1,4 @@
-import numpy as np
+import math
 import eve
 
 
@@ -13,17 +13,47 @@ class ArchGenerator(eve.intervention.MonoPlaneStatic):
             episodes_between_change=episodes_between_arch_change
         )
         device = eve.intervention.device.JShaped(
-            name="guidewire", beams_per_mm_straight=0.5, velocity_limit=(25, 3.14)
+            name="guidewire",
+            velocity_limit=(25, 3.14),
+            length=450,
+            tip_radius=12.1,
+            tip_angle=0.4 * math.pi,
+            tip_outer_diameter=0.7,
+            tip_inner_diameter=0.0,
+            straight_outer_diameter=0.89,
+            straight_inner_diameter=0.0,
+            poisson_ratio=0.49,
+            young_modulus_tip=17e3,
+            young_modulus_straight=80e3,
+            mass_density_tip=0.000021,
+            mass_density_straight=0.000021,
+            visu_edges_per_mm=0.5,
+            collis_edges_per_mm_tip=2,
+            collis_edges_per_mm_straight=0.1,
+            beams_per_mm_tip=1.4,
+            beams_per_mm_straight=0.5,
+            color=(0.0, 0.0, 0.0),
         )
         device2 = eve.intervention.device.JShaped(
             name="cath",
-            tip_angle=0.5 * np.pi,
-            tip_radius=10.0,
             velocity_limit=(25, 3.14),
+            length=450,
+            tip_radius=10.0,
+            tip_angle=0.5 * math.pi,
             tip_outer_diameter=1.2,
-            straight_outer_diameter=1.2,
             tip_inner_diameter=1.0,
+            straight_outer_diameter=1.2,
             straight_inner_diameter=1.0,
+            poisson_ratio=0.49,
+            young_modulus_tip=17e3,
+            young_modulus_straight=80e3,
+            mass_density_tip=0.000021,
+            mass_density_straight=0.000021,
+            visu_edges_per_mm=0.5,
+            collis_edges_per_mm_tip=2,
+            collis_edges_per_mm_straight=0.1,
+            beams_per_mm_tip=1.4,
+            beams_per_mm_straight=0.5,
             color=(1.0, 0.0, 0.0),
         )
         simulation = eve.intervention.simulation.SofaBeamAdapter(friction=0.3)
