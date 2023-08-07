@@ -6,7 +6,8 @@ test*.py
 
 *vmr/
 
-
+.DS_Store
+*.obj
 
 
 ## Github Python .gitignore template
