@@ -7,7 +7,7 @@ from eve.intervention.vesseltree.util.voxelcube import (
     VoxelCube,
 )
 from eve.intervention.vesseltree.util.branch import BranchWithRadii
-from eve.intervention.vesseltree.vesseltree import VesselTree
+from eve.intervention.vesseltree.vesseltree import VesselTree, at_tree_end
 
 
 def print_obj_from_selfmade(
@@ -32,12 +32,12 @@ def print_obj_from_selfmade(
     end_extensions = []
     for branch in vesseltree:
         start = branch.coordinates[0]
-        if vesseltree.at_tree_end(start):
+        if at_tree_end(start, vessel_tree):
             new_branch = extend_branch_end(branch, "start", 20)
             end_extensions.append(new_branch)
 
         end = branch.coordinates[-1]
-        if vesseltree.at_tree_end(end):
+        if at_tree_end(end, vessel_tree):
             new_branch = extend_branch_end(branch, "end", 20)
             end_extensions.append(new_branch)
     for branch in end_extensions:
@@ -63,7 +63,7 @@ def print_obj_from_selfmade(
         mesh,
         os.path.join(
             dir_path,
-            f"aorta_full_type_{vessel_tree.arch_type}_seed_{vessel_tree.seed}_scale_{vessel_tree.scaling_xyzd}_rot_{vessel_tree.rotation_yzx_deg}_omit_{vessel_tree.omit_axis}.obj",
+            f"aorta_type_{vessel_tree.arch_type}_seed_{vessel_tree.seed}_scale_{vessel_tree.scaling_xyzd}_rot_{vessel_tree.rotation_yzx_deg}_omit_{vessel_tree.omit_axis}_full.obj",
         ),
     )
     if z_split is not None:
@@ -90,22 +90,22 @@ def print_obj_from_selfmade(
             lower_model.value_array[:, :, z_remove_upper_idx:] = 0
 
         mesh = get_surface_mesh(lower_model, "ascent")
-        mesh.decimate(0.9, inplace=True)
+        mesh.decimate(0.95, inplace=True)
         save_mesh(
             mesh,
             os.path.join(
                 dir_path,
-                f"aorta_lower_type_{vessel_tree.arch_type}_seed_{vessel_tree.seed}_scale_{vessel_tree.scaling_xyzd}_rot_{vessel_tree.rotation_yzx_deg}_omit_{vessel_tree.omit_axis}_split{z_split}.obj",
+                f"aorta_type_{vessel_tree.arch_type}_seed_{vessel_tree.seed}_scale_{vessel_tree.scaling_xyzd}_rot_{vessel_tree.rotation_yzx_deg}_omit_{vessel_tree.omit_axis}_split{z_split}_lower.obj",
             ),
         )
 
         mesh = get_surface_mesh(upper_model, "ascent")
-        mesh.decimate(0.9, inplace=True)
+        mesh.decimate(0.95, inplace=True)
         save_mesh(
             mesh,
             os.path.join(
                 dir_path,
-                f"aorta_upper_type_{vessel_tree.arch_type}_seed_{vessel_tree.seed}_scale_{vessel_tree.scaling_xyzd}_rot_{vessel_tree.rotation_yzx_deg}_omit_{vessel_tree.omit_axis}_split{z_split}.obj",
+                f"aorta_type_{vessel_tree.arch_type}_seed_{vessel_tree.seed}_scale_{vessel_tree.scaling_xyzd}_rot_{vessel_tree.rotation_yzx_deg}_omit_{vessel_tree.omit_axis}_split{z_split}_upper.obj",
             ),
         )
 
@@ -139,10 +139,10 @@ def extend_branch_end(branch: BranchWithRadii, start_end: str, length: int):
 
 if __name__ == "__main__":
     vessel_tree = eve.intervention.vesseltree.AorticArch(
-        seed=30,
-        rotation_yzx_deg=[0, -20, -5],
-        scaling_xyzd=[1.0, 1.0, 1.0, 0.6],
+        seed=1669028594,
+        rotation_yzx_deg=[0, -25, 0],
+        scaling_xyzd=[0.9995400602406534, 0.9995400602406534, 0.8178605960609021, 0.85],
     )
     vessel_tree.reset()
 
-    print_obj_from_selfmade(vessel_tree, z_split=120)
+    print_obj_from_selfmade(vessel_tree, z_split=100)
