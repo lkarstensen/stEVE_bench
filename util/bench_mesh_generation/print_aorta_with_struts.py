@@ -58,7 +58,7 @@ def print_obj_from_selfmade(
 
         start_rectangles.append(start_rectangle)
 
-        start_sec_cyl = start_rectangle + [0, -3.5, 0]
+        start_sec_cyl = start_rectangle + [0, -3.4, 0]
 
         mark_second_cylinder(voxel_cube_struts, start_sec_cyl, strut_end)
 
@@ -169,7 +169,7 @@ def print_obj_from_selfmade(
         vessel_tree, strut_start_y, spacing, grid_offset
     )
 
-    mesh = get_surface_mesh(voxel_cube_insertion, "ascent", level=0.6)
+    mesh = get_surface_mesh(voxel_cube_insertion, "ascent", level=0.5)
     mesh.decimate(0.8, inplace=True)
     save_mesh(
         mesh,
@@ -189,7 +189,7 @@ def mark_first_cylinder(voxel_cube: VoxelCube, strut_start: np.ndarray):
 
     n_voxels = 2 / voxel_cube.spacing[1]
     n_voxels = int(n_voxels)
-    radii = [2.49] * n_voxels
+    radii = [2.5] * n_voxels
     # radii[0] = radii[-1] = 2.249
 
     for i in range(n_voxels):
@@ -221,8 +221,8 @@ def mark_rectangle(voxel_cube: VoxelCube, rect_start: np.ndarray):
 
     x_voxelrange = range(int(-(n_voxels_x - 1) / 2), int((n_voxels_x - 1) / 2) + 1)
 
-    z_distances = [1.749] * int(n_voxels_x)
-    z_distances[:3] = [0.99, 1.249, 1.49]
+    z_distances = [1.75] * int(n_voxels_x)
+    z_distances[:3] = [1.0, 1.25, 1.5]
     distances_2 = np.flip(z_distances[:3])
     z_distances[-3:] = distances_2
 
@@ -267,9 +267,9 @@ def mark_second_cylinder(
     n_voxels = abs(strut_start[1] - strut_end[1]) / voxel_cube.spacing[1]
     n_voxels = int(n_voxels)
     radii = [4] * n_voxels
-    radii_phase = [2.75, 3.0, 3.25, 3.5, 3.75]
-    radii[:5] = radii_phase
-    radii[-5:] = np.flip(radii_phase)
+    radii_phase = [3.0, 3.25, 3.5, 3.75]
+    radii[:4] = radii_phase
+    radii[-4:] = np.flip(radii_phase)
 
     for i in range(n_voxels):
         radius = radii[i]
@@ -363,7 +363,7 @@ def get_insertion_voxel_cube(
 
         start_rectangles.append(start_rectangle)
 
-        start_sec_cyl = start_rectangle + [0, -3.5, 0]
+        start_sec_cyl = start_rectangle + [0, -3.4, 0]
 
         mark_second_cylinder(voxel_cube_struts, start_sec_cyl, strut_end)
 
@@ -470,3 +470,15 @@ if __name__ == "__main__":
         ],
         z_split=None,
     )
+
+
+# eve.intervention.vesseltree.AorticArch(
+#             seed=34734120,
+#             rotation_yzx_deg=[0, 0, 0],
+#             scaling_xyzd=[
+#                 1.003423358330579,
+#                 1.003423358330579,
+#                 0.9375401030776935,
+#                 0.85,
+#             ],
+#         )
