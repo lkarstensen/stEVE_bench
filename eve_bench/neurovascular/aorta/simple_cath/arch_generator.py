@@ -14,7 +14,7 @@ class ArchGenerator(eve.intervention.MonoPlaneStatic):
         )
         device = eve.intervention.device.JShaped(
             name="guidewire",
-            velocity_limit=(25, 3.14),
+            velocity_limit=(35, 3.14),
             length=450,
             tip_radius=12.1,
             tip_angle=0.4 * math.pi,
