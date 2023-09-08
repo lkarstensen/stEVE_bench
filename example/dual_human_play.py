@@ -3,15 +3,15 @@
 from time import perf_counter
 import pygame
 
-from eve_bench.neurovascular.aorta.guidewire_only.arch_generator import ArchGenerator
+from eve_bench.neurovascular.full import Neurovascular2Ins
 from eve.visualisation import SofaPygame
-from eve.util.userinput.instrumentaction import KeyboardOneDevice
+from eve.util.userinput.instrumentaction import KeyboardTwoDevice
 from eve.util.userinput.visumanipulator import VisuManipulator
 
-intervention = ArchGenerator()
+intervention = Neurovascular2Ins()
 visu = SofaPygame(intervention)
 
-instrumentaction = KeyboardOneDevice()
+instrumentaction = KeyboardTwoDevice()
 visumanipulator = VisuManipulator(visu)
 
 n_steps = 0
@@ -32,6 +32,8 @@ while True:
     # plt.imshow(image)
     # plt.show()
     n_steps += 1
+
+    print(f"{n_steps=}")
 
     if keys_pressed[pygame.K_RETURN]:
         intervention.reset()
