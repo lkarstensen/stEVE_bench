@@ -1,10 +1,12 @@
-import math
-import eve
 import os
 import json
-from eve.intervention.vesseltree.util.branch import Branch, BranchWithRadii
 import numpy as np
 from typing import Tuple, List
+import eve
+from eve.intervention.vesseltree.util.branch import (
+    Branch,
+    BranchWithRadii,
+)
 
 
 class Neurovascular2Ins(eve.intervention.MonoPlaneStatic):
@@ -17,7 +19,7 @@ class Neurovascular2Ins(eve.intervention.MonoPlaneStatic):
         mesh = os.path.join(folder, "meshes", "vessel_architecture_collision.obj")
 
         centerline_folder_path = os.path.join(folder, "meshes", "Centrelines_comb")
-        centerline_coordinates_list = load_multiple_centerlines(centerline_folder_path)
+        branches = load_branches(centerline_folder_path)
 
         insertion = [65.0, -5.0, 35.0]
 
@@ -25,9 +27,11 @@ class Neurovascular2Ins(eve.intervention.MonoPlaneStatic):
             mesh,
             insertion,
             [-1.0, 0.0, 1.0],
-            branches=centerline_coordinates_list,
+            branch_list=branches,
             rotation_yzx_deg=[90, -90, 0],
             scaling_xyz=[1.0, 1.0, 1.0],
+            rotate_branches=False,
+            rotate_ip=False,
         )
 
         device1 = eve.intervention.device.JShaped(
@@ -43,6 +47,7 @@ class Neurovascular2Ins(eve.intervention.MonoPlaneStatic):
             mass_density_straight=0.000005,
             young_modulus_tip=1e3,
             young_modulus_straight=1e3,
+            beams_per_mm_straight=0.6,
         )
 
         device2 = eve.intervention.device.JShaped(
@@ -59,6 +64,7 @@ class Neurovascular2Ins(eve.intervention.MonoPlaneStatic):
             mass_density_straight=0.000005,
             young_modulus_tip=1e3,
             young_modulus_straight=1e3,
+            beams_per_mm_straight=0.6,
         )
 
         simulation = eve.intervention.simulation.SofaBeamAdapter(friction=0.001)
@@ -124,7 +130,7 @@ def load_points_from_json(json_file_path: str) -> Tuple[Branch, List[float]]:
     return branch
 
 
-def load_multiple_centerlines(folder_path: str) -> list:
+def load_branches(folder_path: str) -> list:
     centerlines = []
     for filename in os.listdir(folder_path):
         if filename.startswith("Centerline curve ") and filename.endswith(".json"):
