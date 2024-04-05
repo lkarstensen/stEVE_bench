@@ -3,12 +3,12 @@
 from time import perf_counter
 import pygame
 
-from eve_bench.neurovascular.full import Neurovascular2Ins
+from eve_bench import DualDeviceNav
 from eve.visualisation import SofaPygame
 from eve.util.userinput.instrumentaction import KeyboardTwoDevice
 from eve.util.userinput.visumanipulator import VisuManipulator
 
-intervention = Neurovascular2Ins()
+intervention = DualDeviceNav()
 visu = SofaPygame(intervention)
 
 instrumentaction = KeyboardTwoDevice()

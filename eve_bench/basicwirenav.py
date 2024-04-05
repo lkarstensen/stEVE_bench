@@ -2,18 +2,21 @@ import math
 import eve
 
 
-class ArchGenTypeI(eve.intervention.MonoPlaneStatic):
+class BasicWireNav(eve.intervention.MonoPlaneStatic):
     def __init__(
         self,
-        episodes_between_arch_change: int = 3,
         stop_device_at_tree_end: bool = True,
         normalize_action: bool = False,
     ) -> None:
-        vessel_tree = eve.intervention.vesseltree.AorticArchRandom(
-            episodes_between_change=episodes_between_arch_change,
-            scale_diameter_array=[0.85],
-            arch_types_filter=[eve.intervention.vesseltree.ArchType.I],
+        vessel_tree = eve.intervention.vesseltree.VMR(
+            "0011_H_AO_H",
+            insertion_vessel_name="aorta",
+            insertion_point_idx=-1,
+            insertion_direction_idx_diff=-2,
+            approx_branch_radii=5,
+            rotate_yzx_deg=[0, 133, 0],
         )
+
         device = eve.intervention.device.JShaped(
             name="guidewire",
             velocity_limit=(35, 3.14),
@@ -43,7 +46,7 @@ class ArchGenTypeI(eve.intervention.MonoPlaneStatic):
             simulation=simulation,
             vessel_tree=vessel_tree,
             image_frequency=7.5,
-            image_rot_zx=[25, 0],
+            image_rot_zx=[0, 0],
             image_center=[0, 0, 0],
             field_of_view=None,
         )
@@ -52,7 +55,7 @@ class ArchGenTypeI(eve.intervention.MonoPlaneStatic):
             vessel_tree=vessel_tree,
             fluoroscopy=fluoroscopy,
             threshold=5,
-            branches=["lcca", "rcca", "lsa", "rsa", "bct", "co"],
+            branches=["btrunk", "carotid", "rt_carotid", "subclavian"],
         )
 
         super().__init__(
@@ -64,7 +67,3 @@ class ArchGenTypeI(eve.intervention.MonoPlaneStatic):
             stop_device_at_tree_end,
             normalize_action,
         )
-
-    @property
-    def episodes_between_arch_change(self) -> int:
-        return self.vessel_tree.episodes_between_change

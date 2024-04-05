@@ -1,14 +1,15 @@
 # pylint: disable=no-member
 
 from time import perf_counter
+import numpy as np
 import pygame
 
-from eve_bench.neurovascular.aorta.guidewire_only.arch_generator import ArchGenerator
+from eve_bench import ArchVariety
 from eve.visualisation import SofaPygame
 from eve.util.userinput.instrumentaction import KeyboardOneDevice
 from eve.util.userinput.visumanipulator import VisuManipulator
 
-intervention = ArchGenerator()
+intervention = ArchVariety()
 visu = SofaPygame(intervention)
 
 instrumentaction = KeyboardOneDevice()
@@ -27,8 +28,9 @@ while True:
     keys_pressed = pygame.key.get_pressed()
     action = instrumentaction.get_action()
     visumanipulator.step()
+    action = np.ndarray([15.0, 0.2])
     intervention.step(action=action)
-    image = visu.render()
+    # image = visu.render()
     # plt.imshow(image)
     # plt.show()
     n_steps += 1

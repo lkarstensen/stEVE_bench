@@ -1,5 +1,6 @@
 import os
 import json
+from pathlib import Path
 import numpy as np
 from typing import Tuple, List
 import eve
@@ -8,17 +9,21 @@ from eve.intervention.vesseltree.util.branch import (
     BranchWithRadii,
 )
 
+HERE = Path(__file__).resolve().parent
+DATA_DIR = HERE.parent / "data/dualdevicenav"
 
-class Neurovascular2Ins(eve.intervention.MonoPlaneStatic):
+
+class DualDeviceNav(eve.intervention.MonoPlaneStatic):
     def __init__(
         self,
         stop_device_at_tree_end: bool = True,
         normalize_action: bool = False,
     ) -> None:
-        folder = os.path.dirname(os.path.abspath(__file__))
-        mesh = os.path.join(folder, "meshes", "vessel_architecture_collision.obj")
 
-        centerline_folder_path = os.path.join(folder, "meshes", "Centrelines_comb")
+        mesh = os.path.join(DATA_DIR, "vessel_architecture_collision.obj")
+        visu_mesh = os.path.join(DATA_DIR, "vessel_architecture_visual.obj")
+
+        centerline_folder_path = os.path.join(DATA_DIR, "Centrelines_comb")
         branches = load_branches(centerline_folder_path)
 
         insertion = [65.0, -5.0, 35.0]
@@ -32,6 +37,7 @@ class Neurovascular2Ins(eve.intervention.MonoPlaneStatic):
             scaling_xyz=[1.0, 1.0, 1.0],
             rotate_branches=False,
             rotate_ip=False,
+            visu_mesh=visu_mesh,
         )
 
         device1 = eve.intervention.device.JShaped(
