@@ -4,7 +4,11 @@ Collection of benchmark environments based on [EVE - Endovascular Environment](h
 ## Getting Started
 
 1. Setup [EVE](https://github.com/lkarstensen/eve?tab=readme-ov-file#getting-started) (including Sofa)
-2. Test the installation
+2. Install EVE_bench package
+   ```
+   python3 -m pip install -e .
+   ```
+3. Test the installation
     ```
     python3 examples/function_check.py
     ```
