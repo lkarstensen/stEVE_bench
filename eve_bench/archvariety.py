@@ -5,7 +5,7 @@ import eve
 class ArchVariety(eve.intervention.MonoPlaneStatic):
     def __init__(
         self,
-        episodes_between_arch_change: int = 3,
+        episodes_between_arch_change: int = 1,
         stop_device_at_tree_end: bool = True,
         normalize_action: bool = False,
     ) -> None:
