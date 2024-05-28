@@ -1,10 +1,10 @@
-# EVE_bench
-Collection of benchmark environments based on [EVE - Endovascular Environment](https://github.com/lkarstensen/eve) for research in robotic endovascular interventions. 
+# dEVE_bench
+Collection of benchmark environments based on [dEVE - digital Endovascular Environment](https://github.com/lkarstensen/eve) for research in robotic endovascular interventions. 
 
 ## Getting Started
 
-1. Setup [EVE](https://github.com/lkarstensen/eve?tab=readme-ov-file#getting-started) (including Sofa)
-2. Install EVE_bench package
+1. Setup [dEVE](https://github.com/lkarstensen/eve?tab=readme-ov-file#getting-started) (including Sofa)
+2. Install dEVE_bench package
    ```
    python3 -m pip install -e .
    ```
