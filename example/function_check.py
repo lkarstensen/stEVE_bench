@@ -3,10 +3,10 @@
 from time import perf_counter
 import numpy as np
 
-from eve_bench.neurovascular.aorta.guidewire_only.arch_generator import ArchGenerator
+from eve_bench import ArchVariety
 from eve.visualisation import SofaPygame
 
-intervention = ArchGenerator()
+intervention = ArchVariety()
 visu = SofaPygame(intervention)
 
 
