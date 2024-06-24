@@ -4,12 +4,12 @@ from time import perf_counter
 import numpy as np
 import pygame
 
-from eve_bench import ArchVariety
+from eve_bench import ArchVariety, BasicWireNav, DualDeviceNav
 from eve.visualisation import SofaPygame
 from eve.util.userinput.instrumentaction import KeyboardOneDevice
 from eve.util.userinput.visumanipulator import VisuManipulator
 
-intervention = ArchVariety()
+intervention = DualDeviceNav()
 visu = SofaPygame(intervention)
 
 instrumentaction = KeyboardOneDevice()
